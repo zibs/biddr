@@ -10,6 +10,9 @@
           <li class="nav-item <%= 'active' if current_page?(new_auction_path) %>">
             <%= link_to "Create an Auction", new_auction_path, class: "nav-link" %>
           </li>
+          <li class="nav-item <%= 'active' if current_page?(new_auction_path) %>">
+            <%= link_to "Your Bids", user_bids_path(current_user), class: "nav-link" %>
+          </li>
           <% if user_signed_in? %>
           <li class="nav-item <%= 'active' if current_page?(sessions_path) %>">
             <%= link_to "log out", sessions_path, method: :delete, class: "nav-link" %>

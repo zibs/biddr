@@ -5,10 +5,10 @@ class Bid < ActiveRecord::Base
   validates :amount, numericality: {greater_than_or_equal_to: 1}
 
   def check_price_is_greater_than_current_bid
+    binding.pry
     unless  auction.bids.present? && amount > auction.bids.last.amount
       errors.add(:amount, "Bid must be greater than current bid")
-      # errors.add(:expiration_date, "can't be in the past")
-
+      false
     end
   end
 

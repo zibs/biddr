@@ -1,5 +1,5 @@
 <section class="auction-wrap row">
-  <section class="col-md-8">
+  <section class="col-md-8" id = "<%= dom_id(@auction) %>">
     <h1><%= @auction.title %></h1>
     <p><%= @auction.details %></p>
     <p>ends on <%= @auction.ends_on %></p>
@@ -7,15 +7,18 @@
     <% if @auction.user == current_user && @auction.draft? %>
       <%= link_to "Publish", auction_publishings_path(@auction), method: :post, class: "btn btn-success-outline" %>
     <% end %>
+
     <p>current status: <%= @auction.display_aasm_status %></p>
 
     <% if @bids.any? %>
     <h3>Current Bid: <%= number_to_currency(@bids.last.amount) %> </h3>
     <h5>previous bids:</h5>
+    <section class="bids">
       <% @bids.reverse_each do |bid| %>
         <p><%= number_to_currency(bid.amount) %> by <%= bid.user_full_name %></p>
       <% end %>
-      <% else %>
+    </section>
+    <% else %>
       <h5>No bids yet!</h5>
     <% end %>
   </section>

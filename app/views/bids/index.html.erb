@@ -1,0 +1,8 @@
+<% if current_user.bids.any? %>
+<h1>Your bids</h1>
+  <% @bids.each do |bid| %>
+    <p>you bid <%= number_to_currency(bid.amount) %> for <%= link_to bid.auction.title, auction_path(bid.auction) %></p>
+  <% end %>
+<% else  %>
+<h3>No bids yet! Go bid!</h3>
+<% end %>

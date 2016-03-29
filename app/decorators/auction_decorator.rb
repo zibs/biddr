@@ -3,8 +3,9 @@ class AuctionDecorator < Draper::Decorator
 
   def display_aasm_status
       bootstrap_classes = {"published" => "label-info",
-                             "reserve_met" => "label-success",
-                             "cancelled" => "label-warning",
+                          "reserve_met" => "label-success",
+                          "cancelled" => "label-warning",
+                          "draft" => "label-primary"
                           }
 
       h.content_tag :div, class: "label #{bootstrap_classes[object.aasm_state]}" do
