@@ -1,11 +1,13 @@
 class Auction < ActiveRecord::Base
   include AASM
+
   has_many :bids, dependent: :destroy
+  belongs_to :user
 
   validates :title, presence: true
   validates :details, presence: true
   validates :reserve_price, presence: true, numericality: { greater_than_or_equal_to: 1 }
-  validate  :future_due_date
+  # validate  :future_due_date
 
   aasm whiny_transitions: false do
      # Campaign.all.map(&:save) to make all be updated as draft
@@ -44,10 +46,10 @@ class Auction < ActiveRecord::Base
 
    private
 
-    def future_due_date
-      if self.ends_on
-      self.ends_on > Date.yesterday ? true : errors.add(:due_date, "must be in the future!")
-      end
-    end
+    # def future_due_date
+    #   if self.ends_on
+    #   self.ends_on > Date.yesterday ? true : errors.add(:ends_on, "must be in the future!")
+    #   end
+    # end
 
 end

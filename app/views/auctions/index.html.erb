@@ -1,0 +1,11 @@
+<h1 class = "text-lg-center logo-title">All Auctions (<%= @auctions.length %>)</h1>
+<section class="row questions">
+  <div class="col-md-6 col-md-offset-3">
+    <ul>
+      <% @auctions.each do |auction| %>
+        <li><%= link_to "#{auction.title}", auction_path(auction) %></li>
+        <hr>
+      <% end %>
+    </ul>
+  </div>
+</section>

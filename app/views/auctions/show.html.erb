@@ -1,0 +1,51 @@
+<section class="auction-wrap row">
+  <section class="col-md-8">
+    <h1><%= @auction.title %></h1>
+    <p><%= @auction.details %></p>
+    <p>ends on <%= @auction.ends_on %></p>
+
+    <% if @auction.user == current_user && @auction.draft? %>
+      <%= link_to "Publish", auction_publishings_path(@auction), method: :post, class: "btn btn-success-outline" %>
+    <% end %>
+    <p>current status: <%= @auction.display_aasm_status %></p>
+
+    <% if @bids.any? %>
+    <h3>Current Bid: <%= number_to_currency(@bids.last.amount) %> </h3>
+    <h5>previous bids:</h5>
+      <% @bids.reverse_each do |bid| %>
+        <p><%= number_to_currency(bid.amount) %> by <%= bid.user_full_name %></p>
+      <% end %>
+      <% else %>
+      <h5>No bids yet!</h5>
+    <% end %>
+  </section>
+
+<% unless current_user == @auction.user %>
+  <h2>place a bid!</h2>
+  <% if @bid.errors.any? %>
+  <div class="row">
+    <div class="col-md-4  alert alert-danger">
+      <p>The form contains <strong><%= pluralize(@bid.errors.count, "error") %></strong>.</p>
+    <ul>
+      <% @bid.errors.full_messages.each do |error| %>
+        <li><%= error %></li>
+      <% end %>
+    </ul>
+    </div>
+  </div>
+  <% end %>
+  <section class="col-md-4 bid-wrap">
+    <%= form_for [@auction, @bid] do |f| %>
+      <div class = "form-group">
+          <%= f.label :amount %>
+          <%= f.text_field :amount,
+            :value => (number_with_precision(f.object.amount, :precision => 2) || 0), class: 'form-control' %>
+      </div>
+      <div class = "form-group">
+        <%= f.submit "Bid!", class: "btn btn-primary-outline btn-block" %>
+      </div>
+      <% end %>
+    <% end %>
+  </section>
+
+</section>
