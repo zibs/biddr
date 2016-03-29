@@ -11,10 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160329162918) do
+ActiveRecord::Schema.define(version: 20160329163727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "auctions", force: :cascade do |t|
+    t.string   "title"
+    t.string   "details"
+    t.date     "ends_on"
+    t.decimal  "reserve_price", precision: 8, scale: 2
+    t.string   "aasm_state"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "auctions", ["aasm_state"], name: "index_auctions_on_aasm_state", using: :btree
+
+  create_table "bids", force: :cascade do |t|
+    t.decimal  "amount",     precision: 8, scale: 2
+    t.integer  "auction_id"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "bids", ["auction_id"], name: "index_bids_on_auction_id", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -32,4 +53,5 @@ ActiveRecord::Schema.define(version: 20160329162918) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
+  add_foreign_key "bids", "auctions"
 end

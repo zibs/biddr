@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 # Use postgresql as the database for Active Record
@@ -55,7 +54,7 @@ gem 'font-awesome-rails'
 gem 'active_model_serializers'
 gem 'aasm'
 group :development, :test do
-  gem 'pry-rails'
+  # gem 'pry-rails'
   gem 'rspec-rails', '~> 3.4.2'
   gem 'factory_girl_rails'
   gem 'guard-rspec', require: false
